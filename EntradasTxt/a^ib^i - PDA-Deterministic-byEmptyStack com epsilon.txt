@@ -1,0 +1,11 @@
+a b
+X Z
+E
+Z
+q1 q2
+q1
+
+q1 a E q1 X
+q1 b X q2 E
+q2 E Z q2 E
+q2 b X q2 E

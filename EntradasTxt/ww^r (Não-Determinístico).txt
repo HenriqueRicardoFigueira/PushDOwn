@@ -1,0 +1,13 @@
+a b
+A B Z
+E
+Z
+q0 q1 q2
+q0
+q2
+q0 E E q1 E
+q0 a E q0 A
+q0 b E q0 B
+q1 E Z q2 E
+q1 a A q1 E
+q1 b B q1 E
