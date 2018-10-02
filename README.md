@@ -87,7 +87,7 @@ Clone ou faça o Download do projeto em .zip (via terminal/manual) para sua maqu
      - def consome_palavra(): consome um caracter da palavra.
 
 
-### Passos para Execução:
+## Passos para Execução:
 - Execute o seguinte comando no terminal:
   ```
   python main.py examples/(NOME DO ARQUIVO DA MAQUINA) "PALAVRA"
