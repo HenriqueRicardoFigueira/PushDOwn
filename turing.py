@@ -48,12 +48,7 @@ class Turing:
 
             print("NOVAS FITAS")
             for pilha in maquina.pilhas:
-                print(pilha.retorna_estado())
-                print(maquina.estadoFinal)
-                print(pilha.vazia())
-                print(pilha.palavra)
-                print(pilha.pilha)
-                if(((pilha.retorna_estado() in maquina.estadoFinal ) or maquina.estadoFinal == ['']) and (len(pilha.palavra) == 0) and (pilha.vazia())):
+                if(((pilha.retorna_estado() in maquina.estadoFinal ) or maquina.estadoFinal == ['']) and ((len(pilha.palavra) == 0) and (pilha.vazia())) or (len(pilha.palavra)== 0 and (pilha.retorna_estado() in maquina.estadoFinal))):
                     print(0)
                     print("ACEITEIIIIIIIIIIII")
                     exit(1)
