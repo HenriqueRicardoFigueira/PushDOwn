@@ -4,12 +4,10 @@
 import sys, copy, random
 from pilha import Pilha
 
-class Maquina:
+class automatoPilha:
 	def __init__(self, dados):
 		#Abre o Arquivo
 		arq = open(dados[1],'r')
-
-		self.palavraInicial = list(dados[2])
 
 		self.linhasArq = arq.read().splitlines()
 
@@ -21,17 +19,13 @@ class Maquina:
 		self.estadoInicial = self.linhasArq[5]
 		self.estadoFinal = self.linhasArq[6].split(" ")
 
-		#self.tamanhoFita = int(self.linhasArq[6])
 		self.transicoes = {}
 		self.pilhas = []
 
-		#inicializa maquina
 		self.carrega_maquinaArquivo()
-		#self.cria_fitaInicial(self.linhasArq[4].strip())
-		self.pilhas.append(Pilha(self.estadoInicial, self.palavraInicial))
+		self.pilhas.append(Pilha(self.estadoInicial, list(dados[2])))
 
 	def carrega_maquinaArquivo(self):
-		#COMEÇA QUEBRA DE ARQUIVO (modificar essa parte pra começar a indexar por hash e não por posição ""COMFIRMAR"")
 		self.transicoes = self.grava_transicoesEstadosDestino(self.grava_transicoesEstadosOrigem())
 
 	def grava_transicoesEstadosOrigem(self):
@@ -67,11 +61,6 @@ class Maquina:
 			transicoesDestino[estado] = transiDest
 
 		return transicoesDestino
-
-	def retorna_transicoesPossiveis(self, iniState):
-		if(iniState not in self.transicoes):
-			return None
-		return self.transicoes[iniState]
 	
 	def adiciona_pilha(self,pilha):
 		self.pilhas.append(pilha)
@@ -81,23 +70,12 @@ class Maquina:
 	
 	def clonar_unicaPilha(self,pilha):
 		return copy.deepcopy(pilha)
-	
-	def clonar_todasPilhas(self):
-		return copy.deepcopy(self.pilhas)
 
 	def transicao(self, pilha): #colocar essa função dentro da maquina também
-		print("---------------")
-		print(pilha.pilha)
-		print(pilha.palavra)
-		print(pilha.retorna_estado())
-		print("---------------")
 
 		stateTransitions = self.transicoes[pilha.retorna_estado()]
 		letras = []
 		novasPilhas = []
-		dieOriginal = 0
-		pilhaTotal = 0
-
 		letras+=pilha.retorna_letra()
 		letras.append(self.vazio)
 
@@ -105,26 +83,17 @@ class Maquina:
 			try:
 				transi = []
 				transi+=stateTransitions[letra]
-				pilhaTotal += len(transi)
 			except KeyError:
 				pass
 
 			if len(transi) == 0  or (pilha.retorna_estado() in self.estadoFinal and len(pilha.palavra) > 0  ):
-				if(len(self.pilhas)>1):
-					print("\nNão há Estados Possíveis Para Pilha "+str(self.pilhas.index(pilha))+'.')
-					dieOriginal +=1
-
-				elif(len(letras) == 1):
-					print("\nPalavra Rejeitada")
-					exit(1)
+				if(len(letras) == 1 and len(self.pilhas) == 1):
+					return []
 
 			elif len(transi) == 1:
-				die = False
-				pilha2 = None
-				pilha2 = self.clonar_unicaPilha(pilha)
-
 				for tr in transi[0][0]:
-					
+					die = False
+					pilha2 = self.clonar_unicaPilha(pilha)
 					topo = pilha2.olhaTopo()
 
 					if(tr == topo): 
@@ -132,57 +101,48 @@ class Maquina:
 
 						if(len(pilha2.pilha) ==0 and len(pilha2.palavra) > 0 and pilha2.retorna_estado() in self.estadoFinal):
 							die = True
-							dieOrigTinal+=1
 					
 					elif(tr != self.vazio):
 						die = True
-						dieOriginal+=1
 
 				for tr in reversed(transi[0][2]):
 					if(tr != self.vazio):
 						pilha2.empilha(tr)
 
 				pilha2.mudar_estado(transi[0][1])
+				
 				if(letra != self.vazio):
 					pilha2.consome_palavra()
 
 				if(not die):
 					novasPilhas.append(pilha2)
-			
 
-			'''elif len(transi) > 1:
-
+			elif len(transi) > 1:
 				for tran in transi:
-					topo = pilha.olhaTopo()
+					for tr in tran[0]:
+						die = False
+						pilha2 = self.clonar_unicaPilha(pilha)
+						topo = pilha2.olhaTopo()
 
-					if (tran[0] == topo and tran[0] != self.vazio):
+						if(tr == topo): 
+							pilha2.desempilha()
 
-						for tr in tran[0]:
-
-							pilha2 = self.clonar_unicaPilha(pilha)
-							
-							if(tr == topo and letra == tr):
-								pilha2.desempilha()
+							if(len(pilha2.pilha) ==0 and len(pilha2.palavra) > 0 and pilha2.retorna_estado() in self.estadoFinal):
+								die = True
 						
-						for tr in tran[2]:
-							if(tr != self.vazio):	
-								pilha2.empilha(tr)
+						elif(tr != self.vazio):
+							die = True
 
-						pilha2.mudar_estado(tran[1])
-						novasPilhas.append(pilha2)'''
+					for tr in reversed(tran[2]):
+						if(tr != self.vazio):
+							pilha2.empilha(tr)
 
-		if (dieOriginal >= pilhaTotal or len(novasPilhas)>0):
-			self.remove_pilha(pilha)
+					pilha2.mudar_estado(tran[1])
+					
+					if(letra != self.vazio):
+						pilha2.consome_palavra()
 
+					if(not die):
+						novasPilhas.append(pilha2)
+			
 		return novasPilhas
-		'''else:
-			return None'''
-		'''
-		else:
-			if(len(self.pilhas)>1):
-				print("\nNão há Estados Possíveis Para fita "+str(self.pilhas.index(pilha))+'.')
-				return 1
-
-			else:
-				print("\nPalavra Rejeitada.")
-				exit(1)'''

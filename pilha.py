@@ -24,22 +24,11 @@ class Pilha:
             return self.pilha[len(self.pilha)-1]
         else: return []
 
-    def printPilha(self):
-        if(len(self.pilha ) != 0):
-            for item in self.pilha:
-                print(item)
-    
-    def retorna_pilha(self):
-        return ''.join(self.pilha)
-
     def retorna_estado(self):
         return str(self.estado)
         
     def mudar_estado(self, novoEstado):
         self.estado = novoEstado
-
-    def retorna_tamanho(self):
-        return len(self.pilha)
 
     def retorna_letra(self):
         if (len(self.palavra)>0):
