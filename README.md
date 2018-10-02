@@ -19,13 +19,13 @@ Clone ou faça o Download do projeto em .zip (via terminal/manual) para sua maqu
     cd PushDOwn-master/
 
 ### Documentação
-  -TURING
+  -MAIN
 
     -funcionamento:
         *Instância a classe máquina, cria lista de pilhas, verifica aceitação tanto por pilha vazia, como por estado final, caso ocorra não determinismo adiciona nova pilha criada 	na lista de pilhas.
     
   
-  -MAQUINA
+  -AUTOMATOPILHA
     
     -Atributos:
         PalavraInicial
@@ -120,7 +120,7 @@ Clone ou faça o Download do projeto em .zip (via terminal/manual) para sua maqu
 ### Passos para Execução:
 - Execute o seguinte comando no terminal:
   ```
-  python turing.py examples/(NOME DO ARQUIVO DA MAQUINA) "PALAVRA"
+  python main.py examples/(NOME DO ARQUIVO DA MAQUINA) "PALAVRA"
   ```
 ## Observações
 Se você ja está perdido a ponto de ter chegado até aqui, vá em frente e se afunde de uma vez! :trollface:
