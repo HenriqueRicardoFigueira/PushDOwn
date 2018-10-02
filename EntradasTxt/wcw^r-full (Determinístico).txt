@@ -1,0 +1,18 @@
+a b c
+A AA AB AZ B BA BB BZ Z
+E
+Z
+q0 q1
+q0
+
+q0 a A q0 AA
+q0 a B q0 AB
+q0 a Z q0 AZ
+q0 b A q0 BA
+q0 b B q0 BB
+q0 b Z q0 BZ
+q0 c A q1 A
+q0 c B q1 B
+q1 E Z q1 E
+q1 a A q1 E
+q1 b B q1 E
