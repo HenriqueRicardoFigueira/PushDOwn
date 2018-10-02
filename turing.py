@@ -16,10 +16,17 @@ class Turing:
 
             novasPilhas = []
 
-            print(len(maquina.pilhas))
+            #print(len(maquina.pilhas))
             for pilha in maquina.pilhas:
                 ret = maquina.transicao(pilha)
-                
+
+                print("entrei")
+                print(pilha.pilha)
+                print(pilha.palavra)
+                print("topo: "+str(pilha.olhaTopo()))
+                print(pilha.retorna_estado())
+                print(maquina.transicoes[pilha.retorna_estado()])
+            
                 if(pilha.vazia() and len(pilha.palavra) == 0) or (pilha.retorna_estado() in maquina.estadoFinal and len(pilha.palavra) == 0):
                     print(0)
                     exit(1)

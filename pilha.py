@@ -20,7 +20,8 @@ class Pilha:
             return False
 
     def olhaTopo(self):
-        return self.pilha[len(self.pilha)-1]
+        if(self.vazia() != True):
+            return self.pilha[len(self.pilha)-1]
 
     def printPilha(self):
         if(len(self.pilha ) != 0):

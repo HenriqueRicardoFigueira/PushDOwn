@@ -16,7 +16,7 @@ class Maquina:
 		#variaveis
 		self.alfaEntrada = self.linhasArq[0].split(" ")
 		self.alfaPilha = self.linhasArq[1].split(" ")
-		self.branco = self.linhasArq[2]
+		self.vazio = self.linhasArq[2]
 		self.estados = self.linhasArq[4].split(" ")
 		self.estadoInicial = self.linhasArq[5]
 		self.estadoFinal = self.linhasArq[6].split(" ")
@@ -88,13 +88,21 @@ class Maquina:
 
 	def transicao(self, pilha): #colocar essa função dentro da maquina também
 		stateTransitions = self.transicoes[pilha.retorna_estado()]
-		try:
-			letra = self.pilha.palavra[0]
-		except:
-			letra = self.branco
+		letras = []
+		transi = []
+		novasPilhas = []
 
-		if letra in stateTransitions:
-			transi = stateTransitions[letra]
+		try:
+			letras.append(self.pilha.palavra[0])
+			letras.append(self.vazio)
+		except:
+			letras.append(self.vazio)
+
+		for letra in letras:
+			try:
+				transi+=stateTransitions[letra]
+			except KeyError:
+				pass
 
 			if len(transi) == 0:
 				if(len(self.pilhas)>1):
@@ -112,12 +120,12 @@ class Maquina:
 					if(tr == topo):
 						pilha.desempilha()
 
-					elif(tr != self.branco):
+					elif(tr != self.vazio):
 						print("Palavra Rejeitada")						
 						return exit(1)
 
 				for tr in reversed(transi[0][2]):
-					if(tr != self.branco):
+					if(tr != self.vazio):
 						pilha.empilha(tr)
 
 				pilha.mudar_estado(transi[0][1])
@@ -125,32 +133,31 @@ class Maquina:
 				return None 
 
 			elif len(transi) > 1:
-				novasPilhas = []
 				topo = pilha.olhaTopo()
 
 				for tran in transi:
-					for tr in tran:
-						pilha2 = self.clonar_unicaPilha(pilha)
-						
-						if(tr[0] == topo):
-							pilha2.desempilha()
-						
-						elif(tr[0] != self.branco):
-							print("Palavra Rejeitada")
-							return exit(1)
+					if (tran[0] == topo and tran[0] != self.vazio):
 
-						if(tr[2] != self.branco):	
-							pilha2.empilha(tr[2])
+						for tr in tran[0]:
 
-						pilha2.mudar_estado(tr[1])
+							pilha2 = self.clonar_unicaPilha(pilha)
+							
+							if(tr == topo and letra == tr):
+								pilha2.desempilha()
+						
+						for tr in tran[2]:
+							if(tr != self.vazio):	
+								pilha2.empilha(tr)
+
+						pilha2.mudar_estado(tran[1])
 						novasPilhas.append(pilha2)
 
 				self.remove_pilha(pilha)
-				return novasPilhas
-
-			else:
-				return None
-			'''
+			
+		return novasPilhas
+		'''else:
+			return None'''
+		'''
 		else:
 			if(len(self.pilhas)>1):
 				print("\nNão há Estados Possíveis Para fita "+str(self.pilhas.index(pilha))+'.')
