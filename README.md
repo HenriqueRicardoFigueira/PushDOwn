@@ -23,6 +23,8 @@ Clone ou faça o Download do projeto em .zip (via terminal/manual) para sua maqu
   - Funcionamento: Instância a classe máquina, cria lista de pilhas, verifica aceitação tanto por pilha vazia, como por estado final, caso ocorra não determinismo adiciona nova pilha criada na lista de pilhas.
     
   ### automatoPilha.py
+  - Funcionamento: Quebra o arquivo em linhas e carrega os dados nos atributos, controla a criação de lista de transições, manutenção da lista de pilhas(não determinismo).
+  
   - Atributos:
     - PalavraInicial
     - alfaEntrada
@@ -33,8 +35,6 @@ Clone ou faça o Download do projeto em .zip (via terminal/manual) para sua maqu
     - estadoFinal
     - trasicoes
     - pilhas
-
-  - Funcionamento: Quebra o arquivo em linhas e carrega os dados nos atributos, controla a criação de lista de transições, manutenção da lista de pilhas(não determinismo).
     
   - Métodos:
     - def carrega_maquinaArquivo(): carrega todas as transições para uma lista.
