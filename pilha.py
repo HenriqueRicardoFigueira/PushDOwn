@@ -22,6 +22,7 @@ class Pilha:
     def olhaTopo(self):
         if(self.vazia() != True):
             return self.pilha[len(self.pilha)-1]
+        else: return []
 
     def printPilha(self):
         if(len(self.pilha ) != 0):
@@ -35,14 +36,18 @@ class Pilha:
         return str(self.estado)
         
     def mudar_estado(self, novoEstado):
-        self.consome_palavra()
         self.estado = novoEstado
 
     def retorna_tamanho(self):
         return len(self.pilha)
+
+    def retorna_letra(self):
+        if (len(self.palavra)>0):
+            return self.palavra[0]
+        else: return []
     
     def consome_palavra(self):
-        if len(self.palavra) != 0:
+        if len(self.palavra) > 0:
             self.palavra = self.palavra[1:]
             return True
         else:

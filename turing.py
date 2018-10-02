@@ -11,31 +11,56 @@ class Turing:
 
         #cria a Maquina e a Fita Inicial
         maquina = Maquina(sys.argv)
-        while(True):
-            #aqui de debbug tb
+
+        for i in range(0,100):
 
             novasPilhas = []
+            print('execução: '+str(i+1)+"_________________")
+            print(len(maquina.pilhas))
+            for maq in maquina.pilhas:
+                print(maq.retorna_estado())
+                print(maq.palavra)
+                print(maq.pilha)
+            print("FIM VELHAS FITAS")
 
-            #print(len(maquina.pilhas))
+            if(len(maquina.pilhas) == 0):
+                print("Palavra Rejeitada")
+                exit(1)
+
+            #for x in range(0,len(maquina.pilhas)):
             for pilha in maquina.pilhas:
+                #pilha = maquina.pilhas[x-1]
                 ret = maquina.transicao(pilha)
-
-                print("entrei")
-                print(pilha.pilha)
-                print(pilha.palavra)
-                print("topo: "+str(pilha.olhaTopo()))
-                print(pilha.retorna_estado())
-                print(maquina.transicoes[pilha.retorna_estado()])
             
-                if(pilha.vazia() and len(pilha.palavra) == 0) or (pilha.retorna_estado() in maquina.estadoFinal and len(pilha.palavra) == 0):
+                if((pilha.retorna_estado() in maquina.estadoFinal )and (len(pilha.palavra) == 0) and (pilha.vazia())):
                     print(0)
+                    print("ACEITEIIIIIIIIIIII")
                     exit(1)
 
-                if type(ret) is list:
+                if type(ret) is list and (len(ret) > 0):
                     novasPilhas+=ret
+                
 
-            if(novasPilhas != None):
+            if(len(novasPilhas)>0):
                 for newPilha in novasPilhas:
                     maquina.adiciona_pilha(newPilha)
+                    
+
+            print("NOVAS FITAS")
+            for pilha in maquina.pilhas:
+                print(pilha.retorna_estado())
+                print(maquina.estadoFinal)
+                print(pilha.vazia())
+                print(pilha.palavra)
+                print(pilha.pilha)
+                if(((pilha.retorna_estado() in maquina.estadoFinal ) or maquina.estadoFinal == ['']) and (len(pilha.palavra) == 0) and (pilha.vazia())):
+                    print(0)
+                    print("ACEITEIIIIIIIIIIII")
+                    exit(1)
+                print(pilha.retorna_estado())
+                print(pilha.palavra)
+                print(pilha.pilha)
+            print('Fim execução: '+str(i+1)+"_________________")
+            
 
 Turing().__main__()
